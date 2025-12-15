@@ -1,10 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Câu Hỏi Mới</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/app/css/style.css">
+    <link rel="stylesheet" href="../../static/app/css/addQues.css">
 </head>
 <body>
 
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">DevCommunity</a>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary">Đặt câu hỏi</button>
+            <div class="user-avatar-placeholder">A</div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-container" style="grid-template-columns: 164px 1fr;">
+
+    <nav class="left-sidebar">
+        <ul class="nav-links">
+            <li><a href="home.html" class="nav-item">Trang chủ</a></li>
+            <li><div class="nav-section-title">PUBLIC</div>
+                <ul class="sub-nav">
+                    <li><a href="questions.html" class="nav-item active"><i class="fa-solid fa-earth-americas"></i> Questions</a></li>
+                    <li><a href="tags.html" class="nav-item">Tags</a></li>
+                    <li><a href="users.html" class="nav-item">Users</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="nav-section-title">COLLECTIVES</div>
+                <ul class="sub-nav">
+                    <li><a href="#" class="nav-item">Khám phá</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content-area">
+
+        <h1 class="page-title" style="font-size: 2rem; margin-bottom: 2rem;">Đặt Câu Hỏi Mới</h1>
+
+        <form class="post-card" action="/submit_question" method="POST">
+
+            <div class="form-group">
+                <label for="question_title" class="form-label">Tiêu đề</label>
+                <input type="text" id="question_title" name="title" class="form-control" placeholder="Tóm tắt vấn đề của bạn trong một câu..." required>
+
+            </div>
+
+            <div class="form-group">
+                <label for="question_body" class="form-label">Nội dung chi tiết</label>
+                <textarea id="question_body" name="body" class="form-control" placeholder="Mô tả chi tiết vấn đề, những gì bạn đã thử, và kết quả mong muốn." required></textarea>
+
+            </div>
+
+            <div class="form-group">
+                <label for="question_tags" class="form-label">Thẻ (Tags)</label>
+                <div class="tag-input-container">
+                    <input type="text" id="question_tags" name="tags" placeholder="Nhập thẻ (ví dụ: python, sql, flask) và nhấn Enter/Space">
+                </div>
+
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="btn btn-primary" style="padding: 0.8rem 2rem; font-size: 1.1rem;">Gửi Câu Hỏi</button>
+            </div>
+
+        </form>
+
+    </main>
+</div>
 </body>
 </html>
