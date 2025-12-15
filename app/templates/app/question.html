@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Community Platform</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/app/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">DevCommunity</a>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary">Đặt câu hỏi</button>
+            <div class="user-avatar-placeholder">A</div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-container">
+
+    <nav class="left-sidebar">
+        <ul class="nav-links">
+            <li>
+                <a href="#" class="nav-item">Trang chủ</a>
+            </li>
+            <li>
+                <div class="nav-section-title">PUBLIC</div>
+                <ul class="sub-nav">
+                    <li>
+                        <a href="#" class="nav-item active">
+                            <i class="fa-solid fa-earth-americas"></i> Questions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">Tags</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">Users</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="nav-section-title">COLLECTIVES</div>
+                <ul class="sub-nav">
+                    <li><a href="#" class="nav-item">Khám phá</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content-area">
+
+        <article class="post-card question-card">
+            <div class="post-header">
+                <div class="author-info">
+                    <div class="avatar">N</div>
+                    <div class="meta">
+                        <span class="author-name">Nam Nguyen</span>
+                        <span class="post-date">2 giờ trước</span>
+                    </div>
+                </div>
+                <button class="btn-icon" title="Báo cáo vi phạm">
+                    <i class="fa-regular fa-flag"></i>
+                </button>
+            </div>
+
+            <div class="post-content">
+                <h1 class="post-title">Làm thế nào để lấy ID vừa insert trong SQL Server bằng C#?</h1>
+                <div class="post-body">
+                    <p>Tôi đang viết một ứng dụng C# và sử dụng ADO.NET.</p>
+                    <p>Sau khi chạy câu lệnh INSERT vào bảng <code>Table CauHoi</code>, tôi muốn lấy ngay cái <code>Id</code> vừa được tạo ra để xử lý tiếp.</p>
+                    <div class="code-block">
+                        INSERT INTO CauHoi (Title, Body) VALUES ('Test', 'Body content');
+                    </div>
+                    <p>Có cách nào lấy ID ngay trong cùng một query không?</p>
+                </div>
+                <div class="tags-container">
+                    <span class="tag">c#</span>
+                    <span class="tag">sql-server</span>
+                    <span class="tag">database</span>
+                </div>
+            </div>
+
+            <div class="post-footer">
+                <div class="vote-control">
+                    <button class="btn-vote up"><i class="fa-solid fa-chevron-up"></i></button>
+                    <span class="vote-count">15</span>
+                    <button class="btn-vote down"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+                <div class="post-stats">
+                    <span><i class="fa-regular fa-eye"></i> 120 Lượt xem</span>
+                    <span><i class="fa-regular fa-comment"></i> 1 Trả lời</span>
+                </div>
+            </div>
+        </article>
+
+        <section class="answers-list">
+            <h3>1 Câu trả lời</h3>
+            <article class="post-card answer-card accepted">
+                <div class="accepted-badge"><i class="fa-solid fa-check"></i> Đã chấp nhận</div>
+                <div class="post-header">
+                    <div class="author-info">
+                        <div class="avatar" style="background: #3498db;">J</div>
+                        <div class="meta">
+                            <span class="author-name">John Doe</span>
+                            <span class="post-date">1 giờ trước</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="post-body">
+                        <p>Bạn nên sử dụng hàm <code>SCOPE_IDENTITY()</code>. Nó an toàn hơn <code>@@IDENTITY</code>.</p>
+                        <div class="code-block">SELECT SCOPE_IDENTITY();</div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="vote-control">
+                        <button class="btn-vote up"><i class="fa-solid fa-chevron-up"></i></button>
+                        <span class="vote-count">24</span>
+                        <button class="btn-vote down"><i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
+                    <button class="btn-icon text-danger"><i class="fa-regular fa-flag"></i> Report</button>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="widget">
+            <h4>Thẻ nổi bật</h4>
+            <div class="tags-cloud">
+                <span class="tag">javascript</span>
+                <span class="tag">python</span>
+                <span class="tag">java</span>
+            </div>
+        </div>
+        <div class="widget">
+            <h4>Thống kê</h4>
+            <ul class="stats-list">
+                <li><span>Thành viên:</span> <strong>1,205</strong></li>
+                <li><span>Câu hỏi:</span> <strong>450</strong></li>
+            </ul>
+        </div>
+    </aside>
+
+</div>
+</body>
+</html>
