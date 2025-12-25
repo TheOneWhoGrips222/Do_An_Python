@@ -2,83 +2,64 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt Câu Hỏi Mới</title>
-
+    <title>Đặt câu hỏi - DevCommunity</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../../static/app/css/style.css">
-    <link rel="stylesheet" href="../../static/app/css/addQues.css">
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="#" class="logo">DevCommunity</a>
-        <div class="search-bar">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Tìm kiếm câu hỏi...">
-        </div>
-        <div class="user-actions">
-            <button class="btn btn-primary">Đặt câu hỏi</button>
-            <div class="user-avatar-placeholder">A</div>
+    <div class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-code" style="color: #f48225;"></i> DevCommunity
+            </a>
+            <div class="user-actions">
+                {% if request.user.is_authenticated %}
+                    <span>{{ request.user.username }}</span>
+                {% endif %}
+            </div>
         </div>
     </div>
-</nav>
 
-<div class="main-container" style="grid-template-columns: 164px 1fr;">
+    <div class="main-container">
 
-    <nav class="left-sidebar">
-        <ul class="nav-links">
-            <li><a href="home.html" class="nav-item">Trang chủ</a></li>
-            <li><div class="nav-section-title">PUBLIC</div>
-                <ul class="sub-nav">
-                    <li><a href="questions.html" class="nav-item active"><i class="fa-solid fa-earth-americas"></i> Questions</a></li>
-                    <li><a href="tags.html" class="nav-item">Tags</a></li>
-                    <li><a href="users.html" class="nav-item">Users</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="nav-section-title">COLLECTIVES</div>
-                <ul class="sub-nav">
-                    <li><a href="#" class="nav-item">Khám phá</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+        <div class="main-content" style="grid-column: 1 / span 2;">
+            <h1 style="margin-bottom: 30px;">Đặt một câu hỏi công khai</h1>
 
-    <main class="content-area">
+            <form method="post" style="background: white; padding: 25px; border-radius: 8px; border: 1px solid #e3e6e8; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                {% csrf_token %}
 
-        <h1 class="page-title" style="font-size: 2rem; margin-bottom: 2rem;">Đặt Câu Hỏi Mới</h1>
-
-        <form class="post-card" action="/submit_question" method="POST">
-
-            <div class="form-group">
-                <label for="question_title" class="form-label">Tiêu đề</label>
-                <input type="text" id="question_title" name="title" class="form-control" placeholder="Tóm tắt vấn đề của bạn trong một câu..." required>
-
-            </div>
-
-            <div class="form-group">
-                <label for="question_body" class="form-label">Nội dung chi tiết</label>
-                <textarea id="question_body" name="body" class="form-control" placeholder="Mô tả chi tiết vấn đề, những gì bạn đã thử, và kết quả mong muốn." required></textarea>
-
-            </div>
-
-            <div class="form-group">
-                <label for="question_tags" class="form-label">Thẻ (Tags)</label>
-                <div class="tag-input-container">
-                    <input type="text" id="question_tags" name="tags" placeholder="Nhập thẻ (ví dụ: python, sql, flask) và nhấn Enter/Space">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px;">Tiêu đề</label>
+                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Hãy cụ thể và hình dung như bạn đang hỏi một người khác.</small>
+                    <input type="text" name="title" class="form-control" placeholder="Ví dụ: Làm sao để chuyển String thành Int trong Python?" required
+                           style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px;">
                 </div>
 
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-weight: bold; display: block; margin-bottom: 5px;">Nội dung chi tiết</label>
+                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Mô tả chi tiết vấn đề của bạn và những gì bạn đã thử.</small>
+                    <textarea name="body" rows="10" class="form-control" required
+                              style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px; font-family: monospace;"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Đăng câu hỏi</button>
+            </form>
+        </div>
+
+        <div class="right-sidebar">
+            <div class="widget" style="background-color: #fdf7e2; border: 1px solid #f1e5bc;">
+                <h4 style="margin-bottom: 15px;">Làm sao để có câu hỏi tốt?</h4>
+                <ul style="padding-left: 20px; font-size: 13px; line-height: 1.5;">
+                    <li>Tóm tắt vấn đề ở tiêu đề</li>
+                    <li>Mô tả chi tiết lỗi gặp phải</li>
+                    <li>Thêm code minh họa nếu có</li>
+                    <li>Kiểm tra lỗi chính tả</li>
+                </ul>
             </div>
+        </div>
 
-            <div class="submit-section">
-                <button type="submit" class="btn btn-primary" style="padding: 0.8rem 2rem; font-size: 1.1rem;">Gửi Câu Hỏi</button>
-            </div>
-
-        </form>
-
-    </main>
-</div>
+    </div>
 </body>
 </html>
