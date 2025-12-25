@@ -1,0 +1,28 @@
+/* --- TRANG TAGS (Thẻ) --- */
+.tags-grid {
+    display: grid;
+    /* Hiển thị tối thiểu 280px cho mỗi thẻ, tự động điền */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.tag-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tag-stats {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.tag-description {
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+/* Tùy chỉnh kích thước thẻ nổi bật trên trang Tags */
+.tag-card .tag {
+    font-size: 1rem;
+}

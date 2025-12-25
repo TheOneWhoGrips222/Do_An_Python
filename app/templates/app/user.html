@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users - Thành viên Cộng đồng</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/app/css/style.css">
+    <link rel="stylesheet" href="../../static/app/css/user.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">DevCommunity</a>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary">Đặt câu hỏi</button>
+            <div class="user-avatar-placeholder">A</div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-container">
+
+    <nav class="left-sidebar">
+        <ul class="nav-links">
+            <li>
+                <a href="#" class="nav-item">Trang chủ</a>
+            </li>
+            <li>
+                <div class="nav-section-title">PUBLIC</div>
+                <ul class="sub-nav">
+                    <li>
+                        <a href="#" class="nav-item">
+                            <i class="fa-solid fa-earth-americas"></i> Questions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item">Tags</a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-item active">Users</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="nav-section-title">COLLECTIVES</div>
+                <ul class="sub-nav">
+                    <li><a href="#" class="nav-item">Khám phá</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content-area">
+
+        <h1 class="page-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Thành viên Cộng đồng</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Danh sách các thành viên tích cực và uy tín trong cộng đồng.</p>
+
+        <div class="search-bar" style="margin-bottom: 1.5rem; width: 100%;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm theo tên hoặc vị trí...">
+        </div>
+
+        <div class="users-grid">
+
+            <div class="user-card">
+                <div class="user-avatar" style="background: #e74c3c;">A</div>
+                <div class="user-name">Anh Tuan</div>
+                <div class="user-location"><i class="fa-solid fa-location-dot"></i> Hà Nội, Việt Nam</div>
+                <div class="user-stats">850 Điểm Uy Tín</div>
+            </div>
+
+            <div class="user-card">
+                <div class="user-avatar" style="background: #2ecc71;">M</div>
+                <div class="user-name">Minh Le</div>
+                <div class="user-location"><i class="fa-solid fa-location-dot"></i> Đà Nẵng, Việt Nam</div>
+                <div class="user-stats">1,200 Điểm Uy Tín</div>
+            </div>
+
+            <div class="user-card">
+                <div class="user-avatar" style="background: #f1c40f; color: #333;">T</div>
+                <div class="user-name">Thao Pham</div>
+                <div class="user-location"><i class="fa-solid fa-location-dot"></i> TP. Hồ Chí Minh</div>
+                <div class="user-stats">420 Điểm Uy Tín</div>
+            </div>
+
+            <div class="user-card">
+                <div class="user-avatar" style="background: #9b59b6;">H</div>
+                <div class="user-name">Hoang Nguyen</div>
+                <div class="user-location"><i class="fa-solid fa-location-dot"></i> Hải Phòng</div>
+                <div class="user-stats">1,580 Điểm Uy Tín</div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="widget">
+            <h4>Thẻ nổi bật</h4>
+            <div class="tags-cloud">
+                <span class="tag">javascript</span>
+                <span class="tag">python</span>
+                <span class="tag">java</span>
+            </div>
+        </div>
+        <div class="widget">
+            <h4>Thống kê Cộng đồng</h4>
+            <ul class="stats-list">
+                <li><span>Thành viên:</span> <strong>1,205</strong></li>
+                <li><span>Câu hỏi:</span> <strong>450</strong></li>
+            </ul>
+        </div>
+    </aside>
+
+</div>
+</body>
+</html>
