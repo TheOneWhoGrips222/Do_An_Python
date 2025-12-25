@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ người dùng - DevCommunity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/app/css/style.css">
+    <link rel="stylesheet" href="../../static/app/css/profile.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">DevCommunity</a>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary">Đặt câu hỏi</button>
+            <div class="user-avatar-placeholder">H</div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-container">
+    <nav class="left-sidebar">
+        <ul class="nav-links">
+            <li><a href="#" class="nav-item">Trang chủ</a></li>
+            <li>
+                <div class="nav-section-title">PUBLIC</div>
+                <ul class="sub-nav">
+                    <li><a href="#" class="nav-item"><i class="fa-solid fa-earth-americas"></i> Questions</a></li>
+                    <li><a href="#" class="nav-item">Tags</a></li>
+                    <li><a href="#" class="nav-item active">Users</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content-area">
+        <div class="profile-header-box">
+            <div class="user-info-flex">
+                <div class="profile-avatar" style="background: #9b59b6;">H</div>
+                <div class="profile-title">
+                    <h1>Hiện Võ Phương</h1>
+                    <div class="profile-meta">
+                        <span><i class="fa-solid fa-cake-candles"></i> Thành viên từ hôm nay</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Hồ Chí Minh, Việt Nam</span>
+                    </div>
+                </div>
+                <div class="profile-btns">
+                    <button class="btn-edit-profile"><i class="fa-solid fa-pen"></i> Chỉnh sửa</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-nav-tabs">
+            <a href="#" class="tab-item active">Hồ sơ</a>
+            <a href="#" class="tab-item">Hoạt động</a>
+            <a href="#" class="tab-item">Cài đặt</a>
+        </div>
+
+        <div class="profile-summary-grid">
+            <div class="summary-card">
+                <i class="fa-solid fa-arrow-trend-up card-icon"></i>
+                <h3>Uy tín</h3>
+                <p>Reputation là cách cộng đồng ghi nhận đóng góp của bạn.</p>
+                <span class="stat-value">1,250</span>
+            </div>
+            <div class="summary-card">
+                <i class="fa-solid fa-medal card-icon"></i>
+                <h3>Huy chương</h3>
+                <p>Bạn chưa có huy chương nào. Hãy đóng góp để nhận thưởng!</p>
+                <button class="btn-action">Xem thử thách</button>
+            </div>
+            <div class="summary-card">
+                <i class="fa-solid fa-eye card-icon"></i>
+                <h3>Tác động</h3>
+                <p>Bài viết của bạn đã giúp ích cho 450 người tìm kiếm.</p>
+            </div>
+        </div>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="widget">
+            <h4>Thống kê cá nhân</h4>
+            <ul class="stats-list">
+                <li><span>Câu hỏi:</span> <strong>12</strong></li>
+                <li><span>Câu trả lời:</span> <strong>25</strong></li>
+            </ul>
+        </div>
+    </aside>
+</div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+/* Giữ nguyên các biến màu sắc và reset từ file cũ của bạn */
+:root {
+    --primary-color: #2563eb;
+    --orange-accent: #f48225;
+    --bg-color: #f3f4f6;
+    --card-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+}
+
+/* --- SIDEBAR TRÁI (Đã sửa lỗi hover viền cam) --- */
+.nav-item {
+    display: block;
+    padding: 10px 12px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    border-right: 3px solid transparent;
+}
+
+.nav-item:hover {
+    color: #111;
+    background-color: #f1f5f9;
+    border-right-color: var(--orange-accent); /* VIỀN CAM KHI LIA CHUỘT */
+}
+
+.nav-item.active {
+    background-color: #e3e6e8;
+    color: #111;
+    font-weight: 700;
+    border-right-color: var(--orange-accent);
+}
+
+/* --- TRANG PROFILE (MỚI) --- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background: var(--orange-accent);
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-main-info h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.reputation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.reputation-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Thống kê Like/Dislike */
+.user-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-box {
+    background: var(--card-bg);
+    padding: 1.25rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-box .value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.stat-box .label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Danh sách câu hỏi của tôi */
+.my-questions-section h2 {
+    margin-bottom: 1rem;
+}
+
+.q-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.q-item:last-child {
+    border-bottom: none;
+}
+
+.q-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.05rem;
+}
+
+.q-title:hover {
+    text-decoration: underline;
+}
+
+.q-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.q-score-box {
+    background: #f8fafc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 60px;
+}

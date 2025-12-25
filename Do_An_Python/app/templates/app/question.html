@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ question.Title }} - DevCommunity</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-code" style="color: #f48225;"></i> DevCommunity
+            </a>
+
+            <div class="search-bar">
+                <i class="fas fa-search" style="color: #888;"></i>
+                <input type="text" placeholder="Tìm kiếm...">
+            </div>
+
+            <div class="user-actions">
+                {% if request.user.is_authenticated %}
+                    <span>{{ request.user.username }}</span>
+                    <a href="{% url 'logout' %}" class="btn-primary" style="background-color: #dc2626;">Đăng xuất</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn-primary">Đăng nhập</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <div class="left-sidebar">
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}" class="nav-item">Trang chủ</a></li>
+                <li class="nav-section-title">Cộng đồng</li>
+                <li><a href="#" class="nav-item active">Câu hỏi</a></li>
+                <li><a href="#" class="nav-item">Tags</a></li>
+                <li><a href="#" class="nav-item">Thành viên</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+
+            <div class="post-header">
+                <h1 style="font-size: 1.6rem; margin-bottom: 10px;">{{ question.Title }}</h1>
+                <div style="font-size: 13px; color: #6a737c; padding-bottom: 15px; border-bottom: 1px solid #e3e6e8;">
+                    <span>Đã hỏi <strong>{{ question.CreationDate|date:"d/m/Y" }}</strong></span>
+                    <span style="margin-left: 15px;">Người hỏi <strong>{{ question.OwnUser.username }}</strong></span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; margin-top: 20px;">
+                <div class="vote-column" style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: #6a737c;">
+                    <i class="fas fa-caret-up fa-3x" style="cursor: pointer;"></i>
+                    <span style="font-size: 1.4rem; font-weight: bold; color: #252525;">{{ question.score }}</span>
+                    <i class="fas fa-caret-down fa-3x" style="cursor: pointer;"></i>
+                </div>
+
+                <div class="post-body" style="flex: 1;">
+                    <div style="font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+                        {{ question.Body|linebreaks }}
+                    </div>
+
+                    <div class="tags-container">
+                        {% for tag_item in question.questions.all %}
+                            <span class="tag">{{ tag_item.tag_id.id }}</span>
+                        {% empty %}
+                            <span class="tag">general</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <h3>{{ question.answers.count }} Câu trả lời</h3>
+
+                {% for answer in question.answers.all %}
+                <div class="post-card" style="margin-top: 15px; border: none; border-bottom: 1px solid #e3e6e8; border-radius: 0;">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="width: 40px; text-align: center;">
+                            <i class="fas fa-caret-up fa-2x" style="color: #babfc4;"></i>
+                            <div style="font-weight: bold; font-size: 1.2rem;">{{ answer.AnswerScore }}</div>
+                            <i class="fas fa-caret-down fa-2x" style="color: #babfc4;"></i>
+                        </div>
+
+                        <div style="flex: 1;">
+                            {{ answer.AnswerBody|linebreaks }}
+
+                            <div style="margin-top: 15px; font-size: 12px; color: #6a737c; text-align: right;">
+                                Trả lời bởi <a href="#">{{ answer.OwnUser.username }}</a> vào {{ answer.AnswerDate|date:"H:i d/m/Y" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p style="margin-top: 20px; color: #6a737c;">Chưa có câu trả lời nào. Hãy là người đầu tiên giúp đỡ!</p>
+                {% endfor %}
+            </div>
+
+            <div style="margin-top: 40px; background: #fdf7e2; padding: 20px; border-radius: 8px; border: 1px solid #f1e5bc;">
+                <h4>Câu trả lời của bạn</h4>
+                {% if request.user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <textarea name="content" rows="6" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit;" required placeholder="Viết câu trả lời tại đây..."></textarea>
+                        <button type="submit" class="btn-primary" style="margin-top: 10px;">Gửi câu trả lời</button>
+                    </form>
+                {% else %}
+                    <p>Vui lòng <a href="{% url 'login' %}">đăng nhập</a> để trả lời.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="right-sidebar">
+            <div class="widget">
+                <h4 style="margin-bottom: 10px;">Câu hỏi liên quan</h4>
+                <ul style="list-style: none; padding: 0; font-size: 13px;">
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #0074cc;">Làm sao để center div?</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color: #0074cc;">Lỗi Python import error</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

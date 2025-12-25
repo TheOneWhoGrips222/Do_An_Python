@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hồ sơ cá nhân - DevCommunity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../../static/app/css/ManageUser.css">
+    <link rel="stylesheet" href="../../static/app/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">DevCommunity</a>
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary">Đặt câu hỏi</button>
+            <div class="user-avatar-placeholder">N</div>
+        </div>
+    </div>
+</nav>
+
+<div class="main-container">
+    <nav class="left-sidebar">
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}" class="nav-item">Trang chủ</a></li>
+            <li>
+                <div class="nav-section-title">PUBLIC</div>
+                <ul class="sub-nav">
+                    <li><a href="{% url 'home' %}" class="nav-item"><i class="fa-solid fa-earth-americas"></i> Questions</a></li>
+                    <li><a href="{% url 'tags' %}" class="nav-item">Tags</a></li>
+                    <li><a href="{% url 'users' %}" class="nav-item active">Users</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content-area">
+        <section class="profile-header">
+            <div class="profile-avatar">N</div>
+            <div class="user-main-info">
+                <h1>Nam Nguyen</h1>
+                <div class="reputation-badge">
+                    <i class="fa-solid fa-award" style="color: #ffca28;"></i>
+                    <span>2,540</span>
+                    <span class="reputation-label">Điểm uy tín</span>
+                </div>
+                <p class="post-date">Thành viên từ: 20/12/2023</p>
+            </div>
+        </section>
+
+        <div class="user-stats-grid">
+            <div class="stat-box">
+                <span class="value">12</span>
+                <span class="label">Câu hỏi</span>
+            </div>
+            <div class="stat-box">
+                <span class="value" style="color: var(--green-success);">+150</span>
+                <span class="label">Lượt Thích (llike)</span>
+            </div>
+            <div class="stat-box">
+                <span class="value" style="color: #ef4444;">-5</span>
+                <span class="label">Bị Dislike</span>
+            </div>
+        </div>
+
+        <section class="post-card my-questions-section">
+            <h2>Câu hỏi của tôi</h2>
+            <div class="q-list">
+                <div class="q-item">
+                    <div class="q-info">
+                        <a href="#" class="q-title">Làm thế nào để lấy ID vừa insert trong SQL Server bằng C#?</a>
+                        <div class="q-meta">Đã hỏi: 2 giờ trước • 120 lượt xem</div>
+                    </div>
+                    <div class="q-score-box">
+                        <span class="value">15</span>
+                        <div class="label">Điểm</div>
+                    </div>
+                </div>
+
+                <div class="q-item">
+                    <div class="q-info">
+                        <a href="#" class="q-title">Lỗi kết nối database khi deploy lên Azure?</a>
+                        <div class="q-meta">Đã hỏi: 3 ngày trước • 45 lượt xem</div>
+                    </div>
+                    <div class="q-score-box">
+                        <span class="value">8</span>
+                        <div class="label">Điểm</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="widget">
+            <h4>Thành tựu</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Bạn đã đóng góp tích cực cho cộng đồng!</p>
+        </div>
+    </aside>
+</div>
+
+</body>
+</html>
