@@ -2,14 +2,16 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập</title>
+    <title>Đăng nhập - DevCommunity</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
 </head>
 <body>
     <div class="navbar">
         <div class="nav-container">
-            <a href="{% url 'home' %}" class="logo">Q&A Stack</a>
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-code" style="color: #f48225;"></i> DevCommunity
+            </a>
         </div>
     </div>
 
@@ -17,22 +19,24 @@
         <div class="auth-card">
             <h2 class="auth-title">Đăng nhập</h2>
 
-            <form action="" method="post">
+            <form method="post">
                 {% csrf_token %}
+
                 <div class="form-group">
                     <label>Tên đăng nhập</label>
-                    <input type="text" name="username" class="form-control" placeholder="Nhập username..." required>
+                    <input type="text" name="username" class="form-control" required placeholder="Nhập tên đăng nhập hoặc Email">
                 </div>
 
                 <div class="form-group">
-                    <label>Mật khẩu</label>
-                    <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu..." required>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <label style="margin-bottom: 0;">Mật khẩu</label>
+                        <a href="{% url 'password_reset' %}" style="font-size: 0.85rem; color: #2563eb; text-decoration: none;">Quên mật khẩu?</a>
+                    </div>
+                    <input type="password" name="password" class="form-control" required placeholder="Nhập mật khẩu...">
                 </div>
 
                 {% if form.errors %}
-                    <div style="color: red; margin-bottom: 10px;">
-                        <p>Tên đăng nhập hoặc mật khẩu không đúng!</p>
-                    </div>
+                    <p style="color: red; margin-bottom: 10px;">Tên đăng nhập hoặc mật khẩu không đúng.</p>
                 {% endif %}
 
                 <button type="submit" class="btn-auth">Đăng nhập</button>

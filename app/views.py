@@ -1,20 +1,31 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+from django import forms  # Import thêm thư viện forms
 from .models import Question, Answer
 
-def home(request):
-    # Kiểm tra đăng nhập trước
-    if not request.user.is_authenticated:
-        return redirect('login')
 
+# --- 1. TẠO FORM ĐĂNG KÝ CÓ EMAIL ---
+class SignUpForm(UserCreationForm):
+    # Thêm trường email, bắt buộc nhập
+    email = forms.EmailField(required=True, label="Email")
+
+    class Meta:
+        model = User
+        # Các trường sẽ lưu vào database (Lưu ý: password đã được UserCreationForm tự xử lý)
+        fields = ("username", "email")
+
+
+# --- 2. CÁC VIEW ---
+
+def home(request):
     questions = Question.objects.all().order_by('-CreationDate')
     context = {
         'questions': questions
     }
-    # --- SỬA LỖI: Thêm context vào dòng này ---
     return render(request, 'app/home.html', context)
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -40,17 +51,21 @@ def register(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        # Sử dụng form SignUpForm vừa tạo ở trên thay vì UserCreationForm cũ
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
+
     return render(request, 'app/register.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
+
 
 def question_detail(request, id):
     question = get_object_or_404(Question, id=id)
@@ -69,6 +84,7 @@ def question_detail(request, id):
             return redirect('question_detail', id=id)
 
     return render(request, 'app/question.html', {'question': question})
+
 
 def add_question(request):
     if not request.user.is_authenticated:
@@ -89,35 +105,20 @@ def add_question(request):
     return render(request, 'app/AddQuestion.html')
 
 
+# --- Các view phụ ---
 def tags_view(request):
-    """Hiển thị danh sách tags"""
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    # Bạn có thể thêm logic lấy tags từ database ở đây
     return render(request, 'app/tag.html')
 
 
 def users_view(request):
-    """Hiển thị danh sách users"""
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     users = User.objects.all()
-    context = {
-        'users': users
-    }
+    context = {'users': users}
     return render(request, 'app/user.html', context)
 
 
 def user_profile(request, username):
-    """Hiển thị profile của user"""
-    if not request.user.is_authenticated:
-        return redirect('login')
-
     user = get_object_or_404(User, username=username)
     user_questions = Question.objects.filter(OwnUser=user).order_by('-CreationDate')
-
     context = {
         'profile_user': user,
         'user_questions': user_questions
