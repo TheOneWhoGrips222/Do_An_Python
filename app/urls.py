@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.logout_view, name='logout'),
 
+    path('quest/', views.question_page, name="quest-page"),
     path('question/<int:id>/', views.question_detail, name='question_detail'),
     path('ask/', views.add_question, name='add_question'),
     path('tags/', views.tags_view, name='tags'),
