@@ -13,6 +13,8 @@ urlpatterns = [
 
     path('quest/', views.question_page, name="quest-page"),
     path('question/<int:id>/', views.question_detail, name='question_detail'),
+    path('question/<int:id>/vote/', views.vote_question, name='vote_question'),
+
     path('ask/', views.add_question, name='add_question'),
     path('tags/', views.tags_view, name='tags'),
     path('users/', views.users_view, name='users'),

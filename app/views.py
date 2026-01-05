@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
-from .models import Question, Answer
+from .models import Question, Answer, Vote
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.db import transaction
+
 
 User = get_user_model()
 
@@ -109,3 +113,63 @@ def question_page(request):
                }
 
     return render(request, 'app/question-list.html',context)
+@login_required
+@require_POST
+def vote_question(request, id):
+    q = get_object_or_404(Question, id=id)
+
+    # Không cho tự vote bài mình (đỡ bị thầy hỏi “lách điểm”)
+    if q.own_user_id == request.user.id:
+        return redirect(request.META.get("HTTP_REFERER", "quest-page"))
+
+    try:
+        value = int(request.POST.get("value"))
+    except (TypeError, ValueError):
+        return redirect(request.META.get("HTTP_REFERER", "quest-page"))
+
+    if value not in (1, -1):
+        return redirect(request.META.get("HTTP_REFERER", "quest-page"))
+
+    # Luật reputation cho vote câu hỏi
+    REP_MAP = {1: 5, -1: -2}
+
+    with transaction.atomic():
+        existing = Vote.objects.filter(user=request.user, question=q).first()
+
+        if existing is None:
+            # Tạo vote mới
+            Vote.objects.create(user=request.user, question=q, value=value)
+            q.score += value
+            q.save(update_fields=["score"])
+
+            owner = q.own_user
+            owner.reputation += REP_MAP[value]
+            owner.save(update_fields=["reputation"])
+
+        else:
+            if existing.value == value:
+                # Bấm lại -> gỡ vote
+                existing.delete()
+                q.score -= value
+                q.save(update_fields=["score"])
+
+                owner = q.own_user
+                owner.reputation -= REP_MAP[value]
+                owner.save(update_fields=["reputation"])
+
+            else:
+                # Đổi vote (ví dụ -1 -> +1)
+                old_value = existing.value
+                existing.value = value
+                existing.save(update_fields=["value"])
+
+                # score đổi theo chênh lệch
+                q.score += (value - old_value)
+                q.save(update_fields=["score"])
+
+                # reputation đổi theo chênh lệch
+                owner = q.own_user
+                owner.reputation += (REP_MAP[value] - REP_MAP[old_value])
+                owner.save(update_fields=["reputation"])
+
+    return redirect(request.META.get("HTTP_REFERER", "quest-page"))

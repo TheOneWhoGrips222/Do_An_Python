@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Q&A.urls'
+ROOT_URLCONF = 'QnA.urls'
 
 TEMPLATES = [
     {
@@ -56,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Q&A.wsgi.application'
+WSGI_APPLICATION = 'QnA.wsgi.application'
 
 
 # Database

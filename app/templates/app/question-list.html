@@ -65,7 +65,10 @@
                 <div class="author-info">
                     <div class="avatar">N</div>
                     <div class="meta">
-                        <span class="author-name">{{q.own_user.username}}</span>
+                        <span class="author-name">
+    {{ q.own_user.username }} (rep: {{ q.own_user.reputation }})
+</span>
+
                         <span class="post-date">{{q.creation_date}}</span>
                     </div>
                 </div>
@@ -91,10 +94,22 @@
             <div class="post-footer">
              <div class="evaluation-group">
 
+    <form method="post" action="{% url 'vote_question' q.id %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="value" value="1">
+        <button type="submit" title="Upvote">▲</button>
+    </form>
 
+    <span class="count">Score: {{ q.score }}</span>
 
-        <span class ="count"> Score: {{q.score}}</span>
+    <form method="post" action="{% url 'vote_question' q.id %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="value" value="-1">
+        <button type="submit" title="Downvote">▼</button>
+    </form>
+
 </div>
+
                 <div class="post-stats">
                     <span><i class="fa-regular fa-eye"></i> 120 Lượt xem</span>
                     <span><i class="fa-regular fa-comment"></i> 1 Trả lời</span>
