@@ -6,6 +6,58 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .suggestions-box {
+            position: absolute;
+            background: white;
+            border: 1px solid #d6d9dc;
+            border-top: none;
+            width: 100%; /* Bằng chiều rộng input */
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none; /* Mặc định ẩn */
+            border-radius: 0 0 4px 4px;
+        }
+
+        .suggestion-item {
+            padding: 12px;
+            border-bottom: 1px solid #eff0f1;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f8f9f9;
+        }
+
+        .suggestion-title {
+            color: #0074cc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .suggestion-meta {
+            font-size: 12px;
+            color: #6a737c;
+        }
+
+        .has-answer {
+            background-color: #e1ecf4;
+            color: #39739d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,11 +82,15 @@
             <form method="post" style="background: white; padding: 25px; border-radius: 8px; border: 1px solid #e3e6e8; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 {% csrf_token %}
 
-                <div class="form-group" style="margin-bottom: 20px;">
+                <div class="form-group" style="margin-bottom: 20px; position: relative;">
                     <label style="font-weight: bold; display: block; margin-bottom: 5px;">Tiêu đề</label>
                     <small style="display: block; margin-bottom: 8px; color: #6a737c;">Hãy cụ thể và hình dung như bạn đang hỏi một người khác.</small>
-                    <input type="text" name="title" class="form-control" placeholder="Ví dụ: Làm sao để chuyển String thành Int trong Python?" required
+
+                    <input type="text" id="id_title" name="title" class="form-control" autocomplete="off"
+                           placeholder="Ví dụ: Làm sao để chuyển String thành Int trong Python?" required
                            style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px;">
+
+                    <div id="suggestions" class="suggestions-box"></div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 20px;">
@@ -55,11 +111,80 @@
                     <li>Tóm tắt vấn đề ở tiêu đề</li>
                     <li>Mô tả chi tiết lỗi gặp phải</li>
                     <li>Thêm code minh họa nếu có</li>
-                    <li>Kiểm tra lỗi chính tả</li>
+                    <li>Kiểm tra xem câu hỏi đã tồn tại chưa</li>
                 </ul>
             </div>
         </div>
 
     </div>
+
+    <script>
+        const titleInput = document.getElementById('id_title');
+        const suggestionsBox = document.getElementById('suggestions');
+        let timeout = null;
+
+        titleInput.addEventListener('input', function() {
+            const query = this.value;
+
+            // Xóa timeout cũ để tránh gọi API liên tục (Debounce)
+            clearTimeout(timeout);
+
+            if (query.length < 3) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            // Đợi 300ms sau khi ngừng gõ mới gọi API
+            timeout = setTimeout(() => {
+                fetch(`{% url 'search_similar_questions' %}?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionsBox.innerHTML = ''; // Xóa gợi ý cũ
+
+                        if (data.results.length > 0) {
+                            // Tiêu đề phụ
+                            const header = document.createElement('div');
+                            header.style.padding = '8px 12px';
+                            header.style.background = '#f1f2f3';
+                            header.style.fontSize = '12px';
+                            header.style.fontWeight = 'bold';
+                            header.style.color = '#6a737c';
+                            header.textContent = 'Câu hỏi tương tự có thể đã có câu trả lời:';
+                            suggestionsBox.appendChild(header);
+
+                            // Render từng gợi ý
+                            data.results.forEach(item => {
+                                const div = document.createElement('div');
+                                div.className = 'suggestion-item';
+                                div.innerHTML = `
+                                    <div class="suggestion-title">${item.title}</div>
+                                    <div class="suggestion-meta">
+                                        ${item.answers > 0 ? `<span class="has-answer">${item.answers} trả lời</span>` : '<span>Chưa có trả lời</span>'}
+                                    </div>
+                                `;
+
+                                // Khi click vào gợi ý thì mở tab mới sang câu hỏi đó
+                                div.addEventListener('click', () => {
+                                    window.open(item.url, '_blank');
+                                });
+
+                                suggestionsBox.appendChild(div);
+                            });
+                            suggestionsBox.style.display = 'block';
+                        } else {
+                            suggestionsBox.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            }, 300);
+        });
+
+        // Ẩn gợi ý khi click ra ngoài
+        document.addEventListener('click', function(e) {
+            if (e.target !== titleInput && !suggestionsBox.contains(e.target)) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

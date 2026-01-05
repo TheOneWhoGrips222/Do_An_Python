@@ -2,24 +2,24 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Hồ sơ cá nhân - DevCommunity</title>
+    <title>Hồ sơ cá nhân - {{ profile_user.username }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <link rel="stylesheet" href="../../static/app/css/ManageUser.css">
-    <link rel="stylesheet" href="../../static/app/css/style.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/ManageUser.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="nav-container">
-        <a href="#" class="logo">DevCommunity</a>
+        <a href="{% url 'home' %}" class="logo">DevCommunity</a>
         <div class="search-bar">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Tìm kiếm câu hỏi...">
         </div>
         <div class="user-actions">
-            <button class="btn btn-primary">Đặt câu hỏi</button>
-            <div class="user-avatar-placeholder">N</div>
+            <a href="{% url 'add_question' %}" class="btn btn-primary">Đặt câu hỏi</a>
+            <div class="user-avatar-placeholder">{{ request.user.username|slice:":1"|upper }}</div>
         </div>
     </div>
 </nav>
@@ -41,57 +41,46 @@
 
     <main class="content-area">
         <section class="profile-header">
-            <div class="profile-avatar">N</div>
+            <div class="profile-avatar">{{ profile_user.username|slice:":1"|upper }}</div>
             <div class="user-main-info">
-                <h1>Nam Nguyen</h1>
+                <h1>{{ profile_user.username }}</h1>
                 <div class="reputation-badge">
                     <i class="fa-solid fa-award" style="color: #ffca28;"></i>
-                    <span>2,540</span>
+                    <span>{{ profile_user.reputation }}</span>
                     <span class="reputation-label">Điểm uy tín</span>
                 </div>
-                <p class="post-date">Thành viên từ: 20/12/2023</p>
+                <p class="post-date">Thành viên từ: {{ profile_user.date_joined|date:"d/m/Y" }}</p>
             </div>
         </section>
 
         <div class="user-stats-grid">
             <div class="stat-box">
-                <span class="value">12</span>
+                <span class="value">{{ user_questions.count }}</span>
                 <span class="label">Câu hỏi</span>
             </div>
             <div class="stat-box">
-                <span class="value" style="color: var(--green-success);">+150</span>
-                <span class="label">Lượt Thích (llike)</span>
-            </div>
-            <div class="stat-box">
-                <span class="value" style="color: #ef4444;">-5</span>
-                <span class="label">Bị Dislike</span>
+                <span class="value" style="color: var(--green-success);">0</span>
+                <span class="label">Lượt Thích</span>
             </div>
         </div>
 
         <section class="post-card my-questions-section">
             <h2>Câu hỏi của tôi</h2>
             <div class="q-list">
+                {% for q in user_questions %}
                 <div class="q-item">
                     <div class="q-info">
-                        <a href="#" class="q-title">Làm thế nào để lấy ID vừa insert trong SQL Server bằng C#?</a>
-                        <div class="q-meta">Đã hỏi: 2 giờ trước • 120 lượt xem</div>
+                        <a href="{% url 'question_detail' q.id %}" class="q-title">{{ q.title }}</a>
+                        <div class="q-meta">Đã hỏi: {{ q.creation_date|date:"H:i d/m/Y" }} • {{ q.view_count }} lượt xem</div>
                     </div>
                     <div class="q-score-box">
-                        <span class="value">15</span>
+                        <span class="value">{{ q.score }}</span>
                         <div class="label">Điểm</div>
                     </div>
                 </div>
-
-                <div class="q-item">
-                    <div class="q-info">
-                        <a href="#" class="q-title">Lỗi kết nối database khi deploy lên Azure?</a>
-                        <div class="q-meta">Đã hỏi: 3 ngày trước • 45 lượt xem</div>
-                    </div>
-                    <div class="q-score-box">
-                        <span class="value">8</span>
-                        <div class="label">Điểm</div>
-                    </div>
-                </div>
+                {% empty %}
+                <p>Thành viên này chưa có câu hỏi nào.</p>
+                {% endfor %}
             </div>
         </section>
     </main>
