@@ -6,6 +6,7 @@ from .models import Question, Answer, Tag
 from django.db.models import Count
 from django.http import JsonResponse
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -60,6 +61,10 @@ def question_detail(request, id):
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('login')
+
+        if question.accepted_answer:
+            return redirect('question_detail', id=id)
+
         content = request.POST.get('content')
         if content:
             Answer.objects.create(
@@ -129,3 +134,22 @@ def search_similar_questions(request):
             })
         return JsonResponse({'results': results})
     return JsonResponse({'results': []})
+
+# Yêu cầu đăng nhập
+@login_required
+def accept_answer(request, id):
+    # Lấy câu trả lời theo id
+    answer = get_object_or_404(Answer, id=id)
+    question = answer.question
+
+    # Kiểm tra bảo mật: chỉ người tạo câu hỏi mới được quyền chấp nhận
+    if request.user != question.own_user:
+        return redirect('question_detail', id=question.id)
+
+    if question.accepted_answer == answer:
+        question.accepted_answer = None
+    else:
+        question.accepted_answer = answer
+
+    question.save()
+    return redirect('question_detail', id=question.id)

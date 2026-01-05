@@ -37,4 +37,6 @@ urlpatterns = [
          name='password_reset_complete'),
 
     path('api/search_similar', views.search_similar_questions, name='search_similar_questions'),
+
+    path('answer/<int:id>/', views.accept_answer, name='accept_answer'),
 ]
