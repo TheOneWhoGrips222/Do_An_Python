@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A Community Platform</title>
+    <title>QnA Community Platform</title>
 {% load static %}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,7 +20,7 @@
             <input type="text" placeholder="Tìm kiếm câu hỏi...">
         </div>
         <div class="user-actions">
-            <a href="AddQuestion.html" class="btn-primary">Đặt câu hỏi</a>
+            <a href="{% url 'add_question' %}" class="btn-primary">Đặt câu hỏi</a>
             <div class="user-avatar-placeholder">A</div>
         </div>
     </div>
@@ -42,10 +42,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="tag.html" class="nav-item">Tags</a>
+                        <a href="{% url 'tags' %}" class="nav-item">Tags</a>
                     </li>
                     <li>
-                        <a href="user.html" class="nav-item">Users</a>
+                        <a href="{% url 'users' %}" class="nav-item">Users</a>
                     </li>
                 </ul>
             </li>
@@ -141,5 +141,15 @@
     </aside>
 
 </div>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 </body>
 </html>

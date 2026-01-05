@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Đặt câu hỏi - DevCommunity</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+
 </head>
+
 <body>
 
     <div class="navbar">
@@ -16,7 +20,7 @@
             </a>
             <div class="user-actions">
                 {% if request.user.is_authenticated %}
-                    <span>{{ request.user.username }}</span>
+                <span>{{ request.user.username }}</span>
                 {% endif %}
             </div>
         </div>
@@ -27,21 +31,25 @@
         <div class="main-content" style="grid-column: 1 / span 2;">
             <h1 style="margin-bottom: 30px;">Đặt một câu hỏi công khai</h1>
 
-            <form method="post" style="background: white; padding: 25px; border-radius: 8px; border: 1px solid #e3e6e8; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <form method="post"
+                style="background: white; padding: 25px; border-radius: 8px; border: 1px solid #e3e6e8; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 {% csrf_token %}
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="font-weight: bold; display: block; margin-bottom: 5px;">Tiêu đề</label>
-                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Hãy cụ thể và hình dung như bạn đang hỏi một người khác.</small>
-                    <input type="text" name="title" class="form-control" placeholder="Ví dụ: Làm sao để chuyển String thành Int trong Python?" required
-                           style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px;">
+                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Hãy cụ thể và hình dung như bạn
+                        đang hỏi một người khác.</small>
+                    <input type="text" name="title" class="form-control"
+                        placeholder="Ví dụ: Làm sao để chuyển String thành Int trong Python?" required
+                        style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px;">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label style="font-weight: bold; display: block; margin-bottom: 5px;">Nội dung chi tiết</label>
-                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Mô tả chi tiết vấn đề của bạn và những gì bạn đã thử.</small>
-                    <textarea name="body" rows="10" class="form-control" required
-                              style="width: 100%; padding: 10px; border: 1px solid #babfc4; border-radius: 4px; font-family: monospace;"></textarea>
+                    <small style="display: block; margin-bottom: 8px; color: #6a737c;">Mô tả chi tiết vấn đề của bạn và
+                        những gì bạn đã thử.</small>
+                    <div id="editor" style="height:220px; background:#fff;"></div>
+                    <input type="hidden" name="body" id="bodyInput">
                 </div>
 
                 <button type="submit" class="btn-primary">Đăng câu hỏi</button>
@@ -61,5 +69,27 @@
         </div>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+<script>
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{'header': 1}, {'header': 2}],
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        ['blockquote', 'code-block'],
+        ['link'],
+        ['clean']
+      ]
+    }
+  });
+
+  document.querySelector('form').addEventListener('submit', function () {
+    document.getElementById('bodyInput').value = quill.root.innerHTML;
+  });
+</script>
+
 </body>
+
 </html>
