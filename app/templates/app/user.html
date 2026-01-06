@@ -11,79 +11,82 @@
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="{% url 'home' %}" class="logo">DevCommunity</a>
-        <div class="search-bar">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Tìm kiếm...">
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">DevCommunity</a>
+            <div class="search-bar">
+                <i class="fas fa-search" style="color: #888;"></i>
+                <input type="text" id="global-search-input" placeholder="Tìm kiếm bằng AI..." autocomplete="off">
+                <div id="global-search-results" class="nav-search-results"></div>
+            </div>
+            <div class="user-actions">
+                <a href="{% url 'add_question' %}" class="btn btn-primary">Đặt câu hỏi</a>
+                {% if request.user.is_authenticated %}
+                 <div class="user-avatar-placeholder">{{ request.user.username|slice:":1"|upper }}</div>
+                {% else %}
+                 <a href="{% url 'login' %}" class="btn btn-primary">Đăng nhập</a>
+                {% endif %}
+            </div>
         </div>
-        <div class="user-actions">
-            <a href="{% url 'add_question' %}" class="btn btn-primary">Đặt câu hỏi</a>
-            {% if request.user.is_authenticated %}
-             <div class="user-avatar-placeholder">{{ request.user.username|slice:":1"|upper }}</div>
-            {% else %}
-             <a href="{% url 'login' %}" class="btn btn-primary">Đăng nhập</a>
-            {% endif %}
-        </div>
-    </div>
-</nav>
-
-<div class="main-container">
-
-    <nav class="left-sidebar">
-        <ul class="nav-links">
-            <li>
-                <a href="{% url 'home' %}" class="nav-item">Trang chủ</a>
-            </li>
-            <li>
-                <div class="nav-section-title">PUBLIC</div>
-                <ul class="sub-nav">
-                    <li>
-                        <a href="{% url 'home' %}" class="nav-item">
-                            <i class="fa-solid fa-earth-americas"></i> Questions
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'tags' %}" class="nav-item">Tags</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'users' %}" class="nav-item active">Users</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
     </nav>
 
-    <main class="content-area">
+    <div class="main-container">
 
-        <h1 class="page-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Thành viên Cộng đồng</h1>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">Danh sách các thành viên tích cực và uy tín trong cộng đồng.</p>
-
-        <div class="users-grid">
-            {% for u in users %}
-            <div class="user-card">
-                <div class="user-avatar" style="background: #0074cc;">{{ u.username|slice:":1"|upper }}</div>
-                <div class="user-name">
-                    <a href="{% url 'user_profile' u.username %}" style="color: inherit; text-decoration: none;">{{ u.username }}</a>
-                </div>
-                <div class="user-location"><i class="fa-solid fa-location-dot"></i> Vietnam</div>
-                <div class="user-stats">{{ u.reputation }} Điểm Uy Tín</div>
-            </div>
-            {% endfor %}
-        </div>
-
-    </main>
-
-    <aside class="right-sidebar">
-        <div class="widget">
-            <h4>Thống kê Cộng đồng</h4>
-            <ul class="stats-list">
-                <li><span>Thành viên:</span> <strong>{{ users|length }}</strong></li>
+        <nav class="left-sidebar">
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'home' %}" class="nav-item">Trang chủ</a>
+                </li>
+                <li>
+                    <div class="nav-section-title">PUBLIC</div>
+                    <ul class="sub-nav">
+                        <li>
+                            <a href="{% url 'home' %}" class="nav-item">
+                                <i class="fa-solid fa-earth-americas"></i> Questions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'tags' %}" class="nav-item">Tags</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'users' %}" class="nav-item active">Users</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-        </div>
-    </aside>
+        </nav>
 
-</div>
+        <main class="content-area">
+
+            <h1 class="page-title" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Thành viên Cộng đồng</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Danh sách các thành viên tích cực và uy tín trong cộng đồng.</p>
+
+            <div class="users-grid">
+                {% for u in users %}
+                <div class="user-card">
+                    <div class="user-avatar" style="background: #0074cc;">{{ u.username|slice:":1"|upper }}</div>
+                    <div class="user-name">
+                        <a href="{% url 'user_profile' u.username %}" style="color: inherit; text-decoration: none;">{{ u.username }}</a>
+                    </div>
+                    <div class="user-location"><i class="fa-solid fa-location-dot"></i> Vietnam</div>
+                    <div class="user-stats">{{ u.reputation }} Điểm Uy Tín</div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="widget">
+                <h4>Thống kê Cộng đồng</h4>
+                <ul class="stats-list">
+                    <li><span>Thành viên:</span> <strong>{{ users|length }}</strong></li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+    {% load static %} <script src="{% static 'app/js/ai_search.js' %}"></script>
 </body>
+
 </html>
