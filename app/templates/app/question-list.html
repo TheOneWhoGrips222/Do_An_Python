@@ -20,7 +20,7 @@
             <input type="text" placeholder="Tìm kiếm câu hỏi...">
         </div>
         <div class="user-actions">
-            <a href="AddQuestion.html" class="btn-primary">Đặt câu hỏi</a>
+            <a href="{% url 'add_question' %}" class="btn-primary">Đặt câu hỏi</a>
             <div class="user-avatar-placeholder">A</div>
         </div>
     </div>
@@ -42,10 +42,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="tag.html" class="nav-item">Tags</a>
+                        <a href="{% url 'tags' %}" class="nav-item">Tags</a>
                     </li>
                     <li>
-                        <a href="user.html" class="nav-item">Users</a>
+                        <a href="{% url 'users' %}" class="nav-item">Users</a>
                     </li>
                 </ul>
             </li>
