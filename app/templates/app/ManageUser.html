@@ -14,8 +14,9 @@
     <div class="nav-container">
         <a href="{% url 'home' %}" class="logo">DevCommunity</a>
         <div class="search-bar">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Tìm kiếm câu hỏi...">
+            <i class="fas fa-search" style="color: #888;"></i>
+            <input type="text" id="global-search-input" placeholder="Tìm kiếm bằng AI..." autocomplete="off">
+            <div id="global-search-results" class="nav-search-results"></div>
         </div>
         <div class="user-actions">
             <a href="{% url 'add_question' %}" class="btn btn-primary">Đặt câu hỏi</a>
@@ -92,6 +93,6 @@
         </div>
     </aside>
 </div>
-
+{% load static %} <script src="{% static 'app/js/ai_search.js' %}"></script>
 </body>
 </html>

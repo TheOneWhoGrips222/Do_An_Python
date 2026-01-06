@@ -7,6 +7,7 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .ai_search import find_similar_questions_ai
 
 User = get_user_model()
 
@@ -153,3 +154,28 @@ def accept_answer(request, id):
 
     question.save()
     return redirect('question_detail', id=question.id)
+
+def search_similar_questions(request):
+    """API trả về JSON danh sách câu hỏi tương tự dùng AI"""
+    query = request.GET.get('q', '')
+
+    if len(query) > 5:
+        # Lấy tất cả câu hỏi để so sánh
+        all_questions = list(Question.objects.all().order_by('-creation_date')[:500])
+
+        # Gọi hàm AI xử lý
+        ai_results = find_similar_questions_ai(query, all_questions, top_k=5, threshold=0.4)
+
+        results = []
+        for item in ai_results:
+            q = item['question']
+            similarity_percent = round(item['score'] * 100)
+
+            results.append({
+                'title': q.title,
+                'url': reverse('question_detail', args=[q.id]),
+                'answers': q.answers.count(),
+                'similarity': similarity_percent
+            })
+        return JsonResponse({'results': results})
+    return JsonResponse({'results': []})

@@ -145,29 +145,25 @@
                             // Tiêu đề phụ
                             const header = document.createElement('div');
                             header.style.padding = '8px 12px';
-                            header.style.background = '#f1f2f3';
-                            header.style.fontSize = '12px';
-                            header.style.fontWeight = 'bold';
-                            header.style.color = '#6a737c';
-                            header.textContent = 'Câu hỏi tương tự có thể đã có câu trả lời:';
+                            header.style.background = '#e1ecf4'; // Màu xanh nhẹ cảnh báo
+                            header.style.color = '#39739d';
+                            header.style.fontSize = '13px';
+                            header.innerHTML = '<i class="fas fa-robot"></i> AI tìm thấy câu hỏi tương tự:';
                             suggestionsBox.appendChild(header);
 
-                            // Render từng gợi ý
                             data.results.forEach(item => {
                                 const div = document.createElement('div');
                                 div.className = 'suggestion-item';
                                 div.innerHTML = `
-                                    <div class="suggestion-title">${item.title}</div>
-                                    <div class="suggestion-meta">
-                                        ${item.answers > 0 ? `<span class="has-answer">${item.answers} trả lời</span>` : '<span>Chưa có trả lời</span>'}
+                                    <div>
+                                        <div style="color: #0074cc; font-weight: 500;">${item.title}</div>
+                                        <div style="font-size: 11px; color: #6a737c;">
+                                            Độ giống: <b>${item.similarity}%</b>
+                                            ${item.answers > 0 ? ` • <span class="has-answer">${item.answers} trả lời</span>` : ''}
+                                        </div>
                                     </div>
                                 `;
-
-                                // Khi click vào gợi ý thì mở tab mới sang câu hỏi đó
-                                div.addEventListener('click', () => {
-                                    window.open(item.url, '_blank');
-                                });
-
+                                div.onclick = () => window.open(item.url, '_blank');
                                 suggestionsBox.appendChild(div);
                             });
                             suggestionsBox.style.display = 'block';

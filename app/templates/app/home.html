@@ -19,7 +19,8 @@
 
             <div class="search-bar">
                 <i class="fas fa-search" style="color: #888;"></i>
-                <input type="text" placeholder="Tìm kiếm câu hỏi...">
+                <input type="text" id="global-search-input" placeholder="Tìm kiếm bằng AI..." autocomplete="off">
+                <div id="global-search-results" class="nav-search-results"></div>
             </div>
 
             <div class="user-actions">
@@ -162,6 +163,6 @@
         </div>
 
     </div>
-
+    {% load static %} <script src="{% static 'app/js/ai_search.js' %}"></script>
 </body>
 </html>
